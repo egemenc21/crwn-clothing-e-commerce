@@ -1,3 +1,7 @@
+
+*{
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   font-family: "Bigelow Rules", cursive;
@@ -9,4 +13,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+a{
+  text-decoration: none;
+  color: black;
 }
