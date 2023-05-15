@@ -13,6 +13,10 @@ import {
   doc, //retrieve documents inside firestore db
   getDoc,
   setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs
 } from "firebase/firestore";
 // Your web app's Firebase configuration
 
@@ -33,9 +37,37 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
+
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
+
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+  objectToAdd.forEach((object)=>{
+    const docRef = doc(collectionRef,object.title.toLowerCase())
+    batch.set(docRef,object); //doc reference place and the object needed to add on
+  })
+
+  await batch.commit();
+  console.log("done");
+};
+
+export const getCategoriesAndDocuments = async()=>{
+  const collectionRef = collection(db, 'categories'); //because we already made the 'categories' key before it exists
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc,docSnapshot)=>{
+    const {title,items}= docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  },{});
+  return categoryMap;
+}
+
+
 export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInformation = {}
