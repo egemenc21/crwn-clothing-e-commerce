@@ -1,17 +1,30 @@
-import {Fragment, useContext} from "react"; // to use as a replacement <div></div> but not displaying html element div
+import {Fragment} from "react"; // to use as a replacement <div></div> but not displaying html element div
 import {Outlet} from "react-router-dom"; //Link actually is an anchor tag
+import {useSelector, useDispatch} from "react-redux";
+
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropDown from "../../components/cart-dropdown/cart-dropdown.components";
-import {UserContext} from "../../contexts/user.contexts";
-import {CartContext} from "../../contexts/cart.contexts";
+
+import {selectCurrentUser} from "../../store/user/user.selector";
+import {selectTheStateOfCart} from "../../store/cart/cart.selector";
+import {signOutStart} from "../../store/user/user.action";
+
 import {ReactComponent as CrwnLogo} from "../../assets/crown.svg";
-import {signOutUser} from "../../utils/firebase/firebase.utils";
-import {NavigationContainer,LogoContainer,NavLinks,NavLink} from "./navigation.styles";
+
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLinks,
+  NavLink,
+} from "./navigation.styles";
+
 
 const Navigation = () => {
-  const {currentUser} = useContext(UserContext);
-  const {stateOfCart} = useContext(CartContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+  const stateOfCart = useSelector(selectTheStateOfCart);
 
+  const signOutUser = () => dispatch(signOutStart());
 
   return (
     <Fragment>
@@ -20,22 +33,17 @@ const Navigation = () => {
           <CrwnLogo className="logo" />
         </LogoContainer>
         <NavLinks>
-          <NavLink to="/shop">
-            SHOP
-          </NavLink>
+          <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <NavLink as='span' onClick={signOutUser}> 
-            {/* changing it from link to span */}
+            <NavLink as="span" onClick={signOutUser}>
               SIGN OUT
             </NavLink>
           ) : (
-            <NavLink to="/auth">
-              SIGN IN
-            </NavLink>
+            <NavLink to="/auth">SIGN IN</NavLink>
           )}
-          <CartIcon/>
+          <CartIcon />
         </NavLinks>
-        {stateOfCart && <CartDropDown/>}
+        {stateOfCart && <CartDropDown />}
       </NavigationContainer>
       <Outlet />
     </Fragment>

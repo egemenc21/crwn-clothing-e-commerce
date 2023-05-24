@@ -4,23 +4,29 @@ import {BrowserRouter} from "react-router-dom";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import {UserProvider} from "./contexts/user.contexts";
-import {CartProvider} from "./contexts/cart.contexts";
-import {CategoriesProvider} from "./contexts/categories.contexts";
-
+import {Provider} from "react-redux";
+import {store, persistor} from "./store/store";
+import {PersistGate} from "redux-persist/integration/react";
+import {Elements} from "@stripe/react-stripe-js";
+import { stripePromise } from "./utils/stripe/stripe.utils";
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const options = {
+  // passing the client secret obtained from the server
+  clientSecret: '{{CLIENT_SECRET}}',
+};
+
 root.render(
   // <React.StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <Elements stripe={stripePromise} >
+           <App />
+        </Elements>
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
 
-  <BrowserRouter>
-    <UserProvider>
-      <CategoriesProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </CategoriesProvider>
-    </UserProvider>
-  </BrowserRouter>
   // </React.StrictMode>
 );
 
