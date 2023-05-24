@@ -10,10 +10,6 @@ import {PersistGate} from "redux-persist/integration/react";
 import {Elements} from "@stripe/react-stripe-js";
 import { stripePromise } from "./utils/stripe/stripe.utils";
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const options = {
-  // passing the client secret obtained from the server
-  clientSecret: '{{CLIENT_SECRET}}',
-};
 
 root.render(
   // <React.StrictMode>
