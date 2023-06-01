@@ -4,11 +4,11 @@ import {
   ShoppingIcon,
 } from "./cart-icon.styles.jsx";
 import {useSelector, useDispatch} from "react-redux";
-import {setTheStateOfCart} from "../../store/cart/cart.action.js";
+import {setTheStateOfCart} from "../../store/cart/cart.action";
 import {
   selectTheStateOfCart,
   selectCartCount,
-} from "../../store/cart/cart.selector.js";
+} from "../../store/cart/cart.selector";
 
 const CartIcon = () => {
   const stateOfCart = useSelector(selectTheStateOfCart);

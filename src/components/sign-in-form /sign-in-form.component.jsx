@@ -1,7 +1,7 @@
 import {useState} from "react";
 import FormInput from "../form-input/form-input.component";
 import {useDispatch} from "react-redux";
-import {googleSignInStart,emailSignInStart} from '../../store/user/user.action.js'
+import {googleSignInStart,emailSignInStart} from '../../store/user/user.action'
 
 import {SignInContainer} from "./sign-in-form.styles";
 import Button, {BUTTON_TYPE_CLASSES} from "../button/button.component";
