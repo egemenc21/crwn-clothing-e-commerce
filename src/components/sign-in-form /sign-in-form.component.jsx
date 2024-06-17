@@ -68,6 +68,8 @@ const SignInForm = () => {
           name="password"
           value={password}
         />
+         <div>Test: username: mike@gmail.com | pw: 123456</div>
+        <br/>
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
           <Button
